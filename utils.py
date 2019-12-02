@@ -4,6 +4,8 @@ import string
 from keras.utils import to_categorical
 from keras_preprocessing.sequence import pad_sequences
 from numpy import array
+from keras_preprocessing.image import load_img, img_to_array
+from keras.applications.imagenet_utils import preprocess_input
 
 
 def load_file(name):
@@ -40,16 +42,17 @@ def cleaning_captions(captions):
 
 
 def saving_ready_captions(captions, filename_to_save):
-    lines = []
+    rows = []
     for image_id, list_of_captions in captions.items():
         for caption in list_of_captions:
-            lines.append(image_id + " " + caption)
-    data = "\n".join(lines)
+            rows.append(image_id + " " + caption)
+    data = "\n".join(rows)
     with open(filename_to_save, "w") as saving_file:
         saving_file.write(data)
 
 
-def creating_of_sequences(keras_tokenizer, maximal_length, captions, photos, vocabulary_size):
+def creating_of_sequences(keras_tokenizer, maximal_length, captions, photos,
+                          vocabulary_size):
     x1 = []
     x2 = []
     y = []
@@ -59,8 +62,12 @@ def creating_of_sequences(keras_tokenizer, maximal_length, captions, photos, voc
             for i in range(1, len(sequence)):
                 input_sequence = sequence[:i]
                 output_sequence = sequence[i]
-                input_sequence = pad_sequences([input_sequence], maxlen=maximal_length)[0]
-                output_sequence = to_categorical([output_sequence], num_classes=vocabulary_size)[0]
+                input_sequence = \
+                    pad_sequences([input_sequence], maxlen=maximal_length)[0]
+                output_sequence = \
+                    to_categorical([output_sequence],
+                                   num_classes=vocabulary_size)[
+                        0]
                 x1.append(photos[image_id][0])
                 x2.append(input_sequence)
                 y.append(output_sequence)
@@ -71,3 +78,14 @@ def check_weights(path):
     if os.path.exists(path):
         return True
     return False
+
+
+def prepare_image_to_extracting_features(path_to_image):
+    result_image = load_img(path_to_image, target_size=(224, 224))
+    result_image = img_to_array(result_image)
+    result_image = result_image.reshape((1, result_image.shape[0],
+                                         result_image.shape[1],
+                                         result_image.shape[2]))
+    # может быть неправильная функция, посмотреть, если возникнут проблемы!!!
+    result_image = preprocess_input(result_image)
+    return result_image
