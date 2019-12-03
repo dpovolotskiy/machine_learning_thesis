@@ -91,11 +91,11 @@ class VGG16(object):
                                file_hash='64373286793e3c8b2b4e3219cbf3544b',
                                cache_dir=directory_to_save_weights))
             shutil.move(
-                directory_to_save_weights + r"\models" + r"\vgg16_weights_"
+                directory_to_save_weights + r"/models" + r"/vgg16_weights_"
                                                          r"tf_dim_ordering_"
                                                          r"tf_kernels.h5",
                 directory_to_save_weights)
-            os.rmdir(directory_to_save_weights + r"\models")
+            os.rmdir(directory_to_save_weights + r"/models")
         else:
             self.model.load_weights(self.path_to_weights)
 

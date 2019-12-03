@@ -1,7 +1,7 @@
 from keras import Model
-from keras.layers import Input, Dropout, Dense, Embedding, CuDNNLSTM
+from keras.layers import Input, Dropout, Dense, Embedding
+from keras.layers import LSTM
 from keras.layers import add
-from keras.utils import plot_model
 
 
 def model_for_captions(vocabulary_size, maximal_length):
@@ -12,7 +12,7 @@ def model_for_captions(vocabulary_size, maximal_length):
     input2 = Input(shape=(maximal_length,))
     sequence_model1 = Embedding(vocabulary_size, 256)(input2)
     sequence_model2 = Dropout(0.5)(sequence_model1)
-    sequence_model3 = CuDNNLSTM(256)(sequence_model2)
+    sequence_model3 = LSTM(256)(sequence_model2)
 
     decode1 = add([feature_extraction2, sequence_model3])
     decode2 = Dense(256, activation="relu")(decode1)
@@ -25,5 +25,4 @@ def model_for_captions(vocabulary_size, maximal_length):
 
     caption_model.summary()
 
-    plot_model(model=caption_model, to_file="caption_model.jpg",
-               show_shapes=True)
+    return caption_model
