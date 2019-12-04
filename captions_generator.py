@@ -51,14 +51,18 @@ def one_image_feature_extracting(path):
     return feature
 
 
-def get_predict(path_to_image):
+def get_predict(path_to_image, path_to_model=None):
     print("Prediction was started!")
     keras_tokenizer = load(open("keras_tokenizer.pkl", "rb"))
     with open("maximal_length.txt", "r") as max_len_file:
         maximal_length = int(max_len_file.read())
-    model = load_model("my_model.h5")
+    if path_to_model is None:
+        model = load_model("my_model.h5")
+    else:
+        model = load_model(path_to_model)
     image_features = one_image_feature_extracting(path_to_image)
     caption = generate_caption(model, keras_tokenizer, image_features,
                                maximal_length)
     caption = clean_output_caption(caption)
-    print("Caption for specified image: {}".format(caption))
+    print("Caption for specified image {}: {}".format(path_to_image, caption))
+    return caption

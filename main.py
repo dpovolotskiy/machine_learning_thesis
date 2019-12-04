@@ -4,7 +4,7 @@ import warnings
 
 
 from training import start_fit_model, start_lite_train
-from description_generator import get_predict
+from captions_generator import get_predict
 from text_data_preparation import prepare_text_data
 from feture_extraction import extracting_features_from_image
 
