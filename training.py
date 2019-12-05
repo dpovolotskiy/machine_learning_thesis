@@ -5,8 +5,6 @@ from numpy import array
 from keras.callbacks import ModelCheckpoint
 from pickle import dump
 
-from tqdm import tqdm
-
 from utils import load_file, load_features_of_image
 from caption_model import model_for_captions
 

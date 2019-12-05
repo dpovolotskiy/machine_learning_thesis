@@ -167,5 +167,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.stdout = open("model.log", "w")
     main()

@@ -10,7 +10,7 @@ from utils import prepare_image_to_extracting_features
 
 
 def extracting_features_from_image(image_dataset_directory):
-    vgg = VGG16("/home/dmitriy/PycharmProjects/diplom/machine_learning_thesis/"
+    vgg = VGG16("/home/dpovolotskiy/Documents/machine_learning_thesis/"
                 "vgg16_weights_tf_dim_ordering_tf_kernels.h5")
     model = vgg.get_model()
 
