@@ -30,9 +30,9 @@ if __name__ == '__main__':
             prepare_text_data()
             extracting_features_from_image("Flickr8k_Dataset/Flicker8k_Dataset")
             if args.lite:
-                start_lite_train(10)
+                start_lite_train(20)
             else:
-                start_fit_model(10)
+                start_fit_model(20)
         else:
             if not os.path.exists("captions.txt"):
                 prepare_text_data()
@@ -40,9 +40,9 @@ if __name__ == '__main__':
                 extracting_features_from_image(
                     "Flickr8k_Dataset/Flicker8k_Dataset")
             if args.lite:
-                start_lite_train(10)
+                start_lite_train(20)
             else:
-                start_fit_model(10)
+                start_fit_model(20)
     elif args.mode == "predict":
         if args.filepath is not None and os.path.exists(args.filepath):
             get_predict(args.filepath)

@@ -57,7 +57,7 @@ def get_predict(path_to_image, path_to_model=None):
     with open("maximal_length.txt", "r") as max_len_file:
         maximal_length = int(max_len_file.read())
     if path_to_model is None:
-        model = load_model("my_model.h5")
+        model = load_model("my_model_9.h5")
     else:
         model = load_model(path_to_model)
     image_features = one_image_feature_extracting(path_to_image)

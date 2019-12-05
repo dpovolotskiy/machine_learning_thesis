@@ -1,5 +1,12 @@
-from PyQt5 import QtCore, QtWidgets
+# -*- coding: utf-8 -*-
 
+# Form implementation generated from reading ui file 'main_window.ui'
+#
+# Created by: PyQt5 UI code generator 5.5.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -65,3 +72,4 @@ class Ui_MainWindow(object):
         self.pathImageButton_4.setText(_translate("MainWindow", "Choose image path"))
         self.pathModelButton_5.setText(_translate("MainWindow", "Choose model path"))
         self.checkBox.setText(_translate("MainWindow", "Force training"))
+

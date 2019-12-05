@@ -4,6 +4,7 @@ from keras.utils import to_categorical
 from numpy import array
 from keras.callbacks import ModelCheckpoint
 from pickle import dump
+from keras.models import load_model
 
 from tqdm import tqdm
 
