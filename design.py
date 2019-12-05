@@ -1,17 +1,19 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'main_window.ui'
-#
-# Created by: PyQt5 UI code generator 5.5.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(803, 600)
+        MainWindow.setFixedSize(800, 576)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../../Pictures/rick_and_morty_time_travel-wallpaper-1366x768.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
+        MainWindow.setAutoFillBackground(True)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.imagePreView = QtWidgets.QGraphicsView(self.centralwidget)
@@ -53,17 +55,13 @@ class Ui_MainWindow(object):
         self.checkBox.setGeometry(QtCore.QRect(490, 80, 131, 21))
         self.checkBox.setObjectName("checkBox")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 803, 25))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Image Captioning"))
         self.tariningPushButton.setText(_translate("MainWindow", "Training (minimal 32 RAM)"))
         self.liteTrainingPushButton_2.setText(_translate("MainWindow", "Lite Training"))
         self.predictionButton_3.setText(_translate("MainWindow", "Prediction"))

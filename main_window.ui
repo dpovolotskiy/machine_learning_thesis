@@ -6,12 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>803</width>
-    <height>600</height>
+    <width>800</width>
+    <height>576</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Image Captioning</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../Pictures/rick_and_morty_time_travel-wallpaper-1366x768.jpg</normaloff>../../Pictures/rick_and_morty_time_travel-wallpaper-1366x768.jpg</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGraphicsView" name="imagePreView">
@@ -164,16 +180,6 @@
      <string>Force training</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>803</width>
-     <height>25</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources/>

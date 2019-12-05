@@ -41,8 +41,8 @@ def clean_output_caption(predict):
 
 
 def one_image_feature_extracting(path):
-    model = VGG16("/home/dmitriy/PycharmProjects/diplom/machine_learning_"
-                  "thesis/vgg16_weights_tf_dim_"
+    model = VGG16("/home/dpovolotskiy/Documents/machine_learning_thesis/"
+                  "vgg16_weights_tf_dim_"
                   "ordering_tf_kernels.h5").get_model()
     model.layers.pop()
     model = models.Model(input=model.input, outputs=model.layers[-1].output)

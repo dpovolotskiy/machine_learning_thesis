@@ -9,7 +9,7 @@ from text_data_preparation import prepare_text_data
 from feture_extraction import extracting_features_from_image
 
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.filterwarnings("ignore")
 
 
@@ -24,6 +24,8 @@ if __name__ == '__main__':
     parser.add_argument("--force", help="Rewrite old file with trained "
                                         "parameters", default=False,
                         type=bool)
+    parser.add_argument("--modelpath", help="Enter path to model", default=None,
+                        type=str)
     args = parser.parse_args()
     if args.mode == "training":
         if args.force:
@@ -45,6 +47,6 @@ if __name__ == '__main__':
                 start_fit_model(20)
     elif args.mode == "predict":
         if args.filepath is not None and os.path.exists(args.filepath):
-            get_predict(args.filepath)
+            get_predict(args.filepath, args.modelpath)
         else:
             print("Specified file was not found")
