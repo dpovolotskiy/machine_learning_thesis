@@ -10,12 +10,13 @@ from utils import prepare_image_to_extracting_features
 
 
 def extracting_features_from_image(image_dataset_directory):
-    vgg = VGG16("/home/dpovolotskiy/Documents/machine_learning_thesis/"
+    vgg = VGG16("/machine_learning_thesis/"
                 "vgg16_weights_tf_dim_ordering_tf_kernels.h5")
     model = vgg.get_model()
 
     model.layers.pop()
     model = Model(input=model.input, outputs=model.layers[-1].output)
+
 
     print("Extracting features from training dataset was started. "
           "It may takes several minutes...")

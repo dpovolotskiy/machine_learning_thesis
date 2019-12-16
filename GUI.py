@@ -156,7 +156,7 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         filepath = self.imagePathLineEdit.text()
         modelpath = self.modelPathLineEdit_2.text()
         caption = get_predict(filepath, modelpath)
-        self.LogBrowser.insertPlainText("Caption for specified image {} with current model {}: \n{}\n\n".format(filepath.split("/")[-1], modelpath.split("/")[-1], caption))
+        self.LogBrowser.insertPlainText("Caption for specified image {} with current model {}:\n{}\n\n".format(filepath.split("/")[-1], modelpath.split("/")[-1], caption))
 
 
 def main():
