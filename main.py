@@ -2,15 +2,13 @@ import argparse
 import os
 import warnings
 
+warnings.filterwarnings("ignore")
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from training import start_fit_model, start_lite_train
 from captions_generator import get_predict
 from text_data_preparation import prepare_text_data
 from feture_extraction import extracting_features_from_image
-
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-warnings.filterwarnings("ignore")
 
 
 if __name__ == '__main__':
