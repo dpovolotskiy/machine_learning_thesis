@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+import warnings
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+warnings.filterwarnings("ignore")
 
 import flask
 from flask import Flask, flash, render_template
@@ -9,7 +13,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import wget
 
-from captions_generator import get_predict
+from captions_generator import get_predict_web
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret string'
@@ -32,8 +36,7 @@ def index():
         flash('URL {}'.format(form.url_image.data))
         flask.session["url"] = form.url_image.data
         wget.download(flask.session["url"], "downloaded_image.jpg")
-        caption = get_predict("downloaded_image.jpg", "my_model_15.h5")
-        flask.session["prediction"] = caption
+        flask.session["prediction"] = get_predict_web("downloaded_image.jpg", "my_model_15.h5")
         if os.path.exists("downloaded_image.jpg"):
             os.remove("downloaded_image.jpg")
         return redirect("/result")
@@ -49,4 +52,4 @@ def result():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', threaded=False)
