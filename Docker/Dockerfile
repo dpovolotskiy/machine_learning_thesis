@@ -31,4 +31,4 @@ RUN echo "alias image_capt='python3.5 /machine_learning_thesis/main.py --mode pr
     echo "export LANGUAGE=en_US.UTF-8" >> ~/.bashrc && \
     /bin/bash -c "source ~/.bashrc"
 
-ENTRYPOINT python3 web.py
+ENTRYPOINT /bin/bash -c "python3 web.py"

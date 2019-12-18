@@ -9,7 +9,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import wget
 
-from captions_generator import get_predict_web
+from captions_generator import get_predict
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret string'
@@ -32,7 +32,8 @@ def index():
         flash('URL {}'.format(form.url_image.data))
         flask.session["url"] = form.url_image.data
         wget.download(flask.session["url"], "downloaded_image.jpg")
-        flask.session["prediction"] = get_predict_web("downloaded_image.jpg", "my_model_15.h5")
+        caption = get_predict("downloaded_image.jpg", "my_model_15.h5")
+        flask.session["prediction"] = caption
         if os.path.exists("downloaded_image.jpg"):
             os.remove("downloaded_image.jpg")
         return redirect("/result")
