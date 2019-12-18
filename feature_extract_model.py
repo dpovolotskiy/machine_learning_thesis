@@ -16,6 +16,9 @@ LINK_FOR_DOWNLOAD_VGG16_WEIGHTS = "https://github.com/fchollet/deep-learning" \
 
 
 class VGG16(object):
+    """
+    класс используется для описания модели, которая извлекает признаки из изображений
+    """
     def __init__(self, path_to_weights=None, input_shape=None,
                  number_classes=1000):
         self.number_classes = number_classes

@@ -5,6 +5,9 @@ from keras.layers import add
 
 
 def model_for_captions(vocabulary_size, maximal_length):
+    """
+    функция описывает модель, которая создает текстовые описания изображений
+    """
     input1 = Input(shape=(4096,))
     feature_extraction1 = Dropout(0.5)(input1)
     feature_extraction2 = Dense(256, activation="relu")(feature_extraction1)

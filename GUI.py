@@ -25,8 +25,12 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.predictionButton_3.clicked.connect(self.prediction)
 
     def chose_image_path(self):
+        """
+        функция использутеся для описания функционала кнопки "Указать путь к изображению"
+        и вывода выбранного изображения в окно предпросмотра
+        """
         self.imagePathLineEdit.clear()
-        path = QtWidgets.QFileDialog.getOpenFileName(self, "Choose image",
+        path = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите изображение",
                                                      filter="*.jpg")
         if os.path.exists(path[0]):
             self.imagePathLineEdit.setText(path[0])
@@ -39,124 +43,141 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.imagePreView.show()
 
     def chose_model_path(self):
+        """
+        функция использутеся для описания функционала кнопки "Указать путь к модели"
+        """
         self.modelPathLineEdit_2.clear()
-        path = QtWidgets.QFileDialog.getOpenFileName(self, "Choose model file",
+        path = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите модель",
                                                      filter="*.h5")
         if os.path.exists(path[0]):
             self.modelPathLineEdit_2.setText(path[0])
 
     def training_start(self):
-        QMessageBox.about(self, "INFO", "While training takes place, the work area may not be available.")
+        """
+        функция использутеся для описания функционала кнопки "Тренировка",
+        запускает обучение модели в соответствии с указанными параметрами,
+        ведет лог происходящих событий
+        """
+        QMessageBox.about(self, "ПРЕДУПРЕЖДЕНИЕ", "Во время тренировки рабочая область программы может быть недоступна.")
         if self.checkBox.checkState():
             QCoreApplication.processEvents()
-            self.LogBrowser.insertPlainText("Preparing text data was started! It may takes several minutes...\n")
+            self.LogBrowser.insertPlainText("Подготовка текстовых данных начата! Это может занять несколько минут...\n")
             prepare_text_data()
-            self.LogBrowser.insertPlainText("Preparing text data was finished!\n\n")
+            self.LogBrowser.insertPlainText("Подготовка текстовых данных завершена!\n\n")
             QCoreApplication.processEvents()
-            self.LogBrowser.insertPlainText("Extracting features from training dataset was started. It may takes several minutes...\n")
+            self.LogBrowser.insertPlainText("Извлечение признаков из тренировочного набора данных начато! Это может занять несколько минут...\n")
             extracting_features_from_image("Flickr8k_Dataset/Flicker8k_Dataset")
-            self.LogBrowser.insertPlainText("Extracting features was finished!\n\n")
+            self.LogBrowser.insertPlainText("Извлечение признаков завершено!\n\n")
             QCoreApplication.processEvents()
-            self.LogBrowser.insertPlainText("Model fit was started. Please wait!\n")
-            start_fit_model(10)
-            self.LogBrowser.insertPlainText("Fit was finished. Full log you can see in model.log file.\n\n")
+            self.LogBrowser.insertPlainText("Обучение начато. Пожалуйста подождите!\n")
+            start_fit_model(20)
+            self.LogBrowser.insertPlainText("Обучение завершено. Полный лог событий можно увидеть в фале model.log.\n\n")
             QCoreApplication.processEvents()
         else:
             if not os.path.exists("captions.txt"):
                 QCoreApplication.processEvents()
                 self.LogBrowser.insertPlainText(
-                    "Preparing text data was started! It may takes several minutes...\n")
+                    "Подготовка текстовых данных начата! Это может занять несколько минут...\n")
                 prepare_text_data()
                 self.LogBrowser.insertPlainText(
-                    "Preparing text data was finished!\n\n")
+                    "Подготовка текстовых данных завершена!\n\n")
                 QCoreApplication.processEvents()
             else:
                 QCoreApplication.processEvents()
-                self.LogBrowser.insertPlainText("Skip preparing text data. "
-                                                "(captions.txt already exists)\n\n")
+                self.LogBrowser.insertPlainText("Пропуск этапа подготовки текстовых данных. "
+                                                "(файл captions.txt уже существует)\n\n")
                 QCoreApplication.processEvents()
             if not os.path.exists("features.pkl"):
                 QCoreApplication.processEvents()
                 self.LogBrowser.insertPlainText(
-                    "Extracting features from training dataset was started. It may takes several minutes...\n")
+                    "Извлечение признаков из тренировочного набора данных начато! Это может занять несколько минут...\n")
                 extracting_features_from_image(
                     "Flickr8k_Dataset/Flicker8k_Dataset")
                 self.LogBrowser.insertPlainText(
-                    "Extracting features was finished!\n\n")
+                    "Извлечение признаков завершено!\n\n")
                 QCoreApplication.processEvents()
             else:
                 QCoreApplication.processEvents()
-                self.LogBrowser.insertPlainText("Skip extracting features. "
-                                                "(features.pkl already exists)\n\n")
+                self.LogBrowser.insertPlainText("Пропуск этапа извлечения признаков. "
+                                                "(файл features.pkl уже существует)\n\n")
                 QCoreApplication.processEvents()
             self.LogBrowser.insertPlainText(
-                "Model fit was started. Please wait!\n")
-            start_fit_model(10)
+                "Обучение начато. Пожалуйста подождите!\n")
+            start_fit_model(20)
             self.LogBrowser.insertPlainText(
-                "Fit was finished. Full log you can see in model.log file.\n\n")
+                "Обучение завершено. Полный лог событий можно увидеть в файле model.log.\n\n")
             QCoreApplication.processEvents()
 
     def lite_training_start(self):
-        QMessageBox.about(self, "INFO", "While training takes place, the work area may not be available.")
+        """
+        функция использутеся для описания функционала кнопки "Облегчённый режим тренировки",
+        запускает облегченное обучение модели в соответствии с указанными параметрами,
+        ведет лог происходящих событий
+        """
+        QMessageBox.about(self, "ПРЕДУПРЕЖДЕНИЕ", "Во время тренировки рабочая область программы может быть недоступна.")
         if self.checkBox.checkState():
             QCoreApplication.processEvents()
             self.LogBrowser.insertPlainText(
-                "Preparing text data was started! It may takes several minutes...\n")
+                "Подготовка текстовых данных начата! Это может занять несколько минут...\n")
             prepare_text_data()
             self.LogBrowser.insertPlainText(
-                "Preparing text data was finished!\n\n")
+                "Подготовка текстовых данных завершена!\n\n")
             QCoreApplication.processEvents()
             self.LogBrowser.insertPlainText(
-                "Extracting features from training dataset was started. It may takes several minutes...\n")
+                "Извлечение признаков из тренировочного набора данных начато! Это может занять несколько минут...\n")
             extracting_features_from_image(
                 "Flickr8k_Dataset/Flicker8k_Dataset")
             self.LogBrowser.insertPlainText(
-                "Extracting features was finished!\n\n")
+                "Извлечение признаков завершено!\n\n")
             QCoreApplication.processEvents()
             self.LogBrowser.insertPlainText(
-                "Model fit was started. Please wait!\n")
-            start_lite_train(10)
+                "Обучение начато. Пожалуйста подождите!\n")
+            start_lite_train(20)
             self.LogBrowser.insertPlainText(
-                "Fit was finished. Full log you can see in model.log file.\n\n")
+                "Обучение завершено. Полный лог событий можно увидеть в файле model.log.\n\n")
             QCoreApplication.processEvents()
         else:
             if not os.path.exists("captions.txt"):
                 QCoreApplication.processEvents()
                 self.LogBrowser.insertPlainText(
-                    "Preparing text data was started! It may takes several minutes...\n")
+                    "Подготовка текстовых данных начата! Это может занять несколько минут...\n")
                 prepare_text_data()
                 self.LogBrowser.insertPlainText(
-                    "Preparing text data was finished!\n\n")
+                    "Подготовка текстовых данных завершена!\n\n")
                 QCoreApplication.processEvents()
             else:
-                self.LogBrowser.insertPlainText("Skip preparing text data. "
-                                                "(captions.txt already exists)\n\n")
+                self.LogBrowser.insertPlainText("Пропуск этапа подготовки текстовых данных. "
+                                                "(файл captions.txt уже существует)\n\n")
                 QCoreApplication.processEvents()
             if not os.path.exists("features.pkl"):
                 self.LogBrowser.insertPlainText(
-                    "Extracting features from training dataset was started. It may takes several minutes...\n")
+                    "Извлечение признаков из тренировочного набора данных начато! Это может занять несколько минут...\n")
                 QApplication.processEvents()
                 extracting_features_from_image(
                     "Flickr8k_Dataset/Flicker8k_Dataset")
                 self.LogBrowser.insertPlainText(
-                    "Extracting features was finished!\n\n")
+                    "Извлечение признаков завершено!\n\n")
                 QCoreApplication.processEvents()
             else:
-                self.LogBrowser.insertPlainText("Skip extracting features. "
-                                                "(features.pkl already exists)\n\n")
+                self.LogBrowser.insertPlainText("Пропуск этапа извлечения признаков. "
+                                                "(файл features.pkl уже существует)\n\n")
                 QCoreApplication.processEvents()
             self.LogBrowser.insertPlainText(
-                "Model lite fit was started. Please wait!\n")
-            start_lite_train(10)
+                "Обучение начато. Пожалуйста подождите!\n")
+            start_lite_train(20)
             self.LogBrowser.insertPlainText(
-                "Lite fit was finished. Full log you can see in model.log file.\n\n")
+                "Обучение завершено. Полный лог событий можно увидеть в файле model.log.\n\n")
             QCoreApplication.processEvents()
 
     def prediction(self):
+        """
+        функция использутеся для описания функционала кнопки "Выполнить описание",
+        производит вывод в приложение сгенерированного текстового описания изображения
+        """
         filepath = self.imagePathLineEdit.text()
         modelpath = self.modelPathLineEdit_2.text()
         caption = get_predict(filepath, modelpath)
-        self.LogBrowser.insertPlainText("Caption for specified image {} with current model {}:\n{}\n\n".format(filepath.split("/")[-1], modelpath.split("/")[-1], caption))
+        self.LogBrowser.insertPlainText("Описание для изображения {} при указанной модели {}: \n{}\n\n".format(filepath.split("/")[-1], modelpath.split("/")[-1], caption))
 
 
 def main():

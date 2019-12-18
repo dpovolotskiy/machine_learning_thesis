@@ -1,20 +1,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MainWindow(object):
+    """
+    класс описывающий внешний вид и структурные элементы графического интерфейса
+    """
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(800, 576)
+        MainWindow.resize(797, 570)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(797, 570))
+        MainWindow.setMaximumSize(QtCore.QSize(797, 570))
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Pictures/rick_and_morty_time_travel-wallpaper-1366x768.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(True)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy)
+        self.centralwidget.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.centralwidget.setObjectName("centralwidget")
         self.imagePreView = QtWidgets.QGraphicsView(self.centralwidget)
         self.imagePreView.setGeometry(QtCore.QRect(0, 0, 481, 351))
@@ -36,10 +45,10 @@ class Ui_MainWindow(object):
         self.imagePathLineEdit.setReadOnly(True)
         self.imagePathLineEdit.setObjectName("imagePathLineEdit")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(490, 130, 151, 21))
+        self.label.setGeometry(QtCore.QRect(490, 130, 171, 21))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(490, 210, 161, 30))
+        self.label_2.setGeometry(QtCore.QRect(490, 210, 111, 30))
         self.label_2.setObjectName("label_2")
         self.modelPathLineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.modelPathLineEdit_2.setGeometry(QtCore.QRect(490, 240, 301, 31))
@@ -52,7 +61,7 @@ class Ui_MainWindow(object):
         self.pathModelButton_5.setGeometry(QtCore.QRect(490, 270, 301, 31))
         self.pathModelButton_5.setObjectName("pathModelButton_5")
         self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
-        self.checkBox.setGeometry(QtCore.QRect(490, 80, 131, 21))
+        self.checkBox.setGeometry(QtCore.QRect(490, 80, 181, 21))
         self.checkBox.setObjectName("checkBox")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -61,13 +70,13 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Image Captioning"))
-        self.tariningPushButton.setText(_translate("MainWindow", "Training (minimal 32 RAM)"))
-        self.liteTrainingPushButton_2.setText(_translate("MainWindow", "Lite Training"))
-        self.predictionButton_3.setText(_translate("MainWindow", "Prediction"))
-        self.label.setText(_translate("MainWindow", "Path to image"))
-        self.label_2.setText(_translate("MainWindow", "Path to model"))
-        self.pathImageButton_4.setText(_translate("MainWindow", "Choose image path"))
-        self.pathModelButton_5.setText(_translate("MainWindow", "Choose model path"))
-        self.checkBox.setText(_translate("MainWindow", "Force training"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Описание изображений"))
+        self.tariningPushButton.setText(_translate("MainWindow", "Тренировка (необходимо 32 ГБ RAM)"))
+        self.liteTrainingPushButton_2.setText(_translate("MainWindow", "Облегчённый режим тренировки"))
+        self.predictionButton_3.setText(_translate("MainWindow", "Выполнить описание"))
+        self.label.setText(_translate("MainWindow", "Путь к изображению:"))
+        self.label_2.setText(_translate("MainWindow", "Путь к модели:"))
+        self.pathImageButton_4.setText(_translate("MainWindow", "Указать путь к изображению"))
+        self.pathModelButton_5.setText(_translate("MainWindow", "Указать путь к модели"))
+        self.checkBox.setText(_translate("MainWindow", "Полная тренировка"))
 

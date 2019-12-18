@@ -5,6 +5,10 @@ from utils import load_file
 
 
 def extracting_captions(data):
+    """
+    функция используется для извлечения существующих описаний из переданного в параметре data файла
+    и формирует словарь, в котором каждому id изображения соответствует пять описаний на английском языке
+    """
     captions = {}
     for caption in data.split("\n"):
         image_descriptions = caption.split()
@@ -19,6 +23,11 @@ def extracting_captions(data):
 
 
 def cleaning_captions(captions):
+    """
+    функция используется для корректировки извлеченных описаний и приводит их к единому виду,
+    переводит все слова в нижний регистр, удаляет знаки пунктуации, удаляет однобуквенные слова,
+    удаляет небуквенные символы
+    """
     translation_table = str.maketrans("", "", string.punctuation)
     for image_id, list_of_captions in captions.items():
         for i in range(len(list_of_captions)):
@@ -32,6 +41,9 @@ def cleaning_captions(captions):
 
 
 def transfer_captions_to_vocabulary(captions):
+    """
+    функция используется для формирования словаря из всех слов, которые существуют в описаниях изображений
+    """
     all_captions = set()
     for image_id in captions.keys():
         [all_captions.update(d.split()) for d in captions[image_id]]
@@ -39,6 +51,9 @@ def transfer_captions_to_vocabulary(captions):
 
 
 def saving_ready_captions(captions, filename_to_save):
+    """
+    функция используется для сохранения извлеченных и скорректированных описаний в файл
+    """
     rows = []
     for image_id, list_of_captions in captions.items():
         for caption in list_of_captions:
@@ -49,11 +64,15 @@ def saving_ready_captions(captions, filename_to_save):
 
 
 def prepare_text_data():
-    print("Preparing text data was started! It may takes several minutes...")
+    """
+    функция используется для подготовки текстовых данных к дальнейшему использованию при обучении и сохранения этих
+    данных в файл
+    """
+    print("Подготовка текстовых данных начата! Это может занять несколько минут...")
     path_to_token = "Flickr8k_text/Flickr8k.token.txt"
     data = load_file(path_to_token)
     captions = extracting_captions(data)
     cleaning_captions(captions)
     vocabulary = transfer_captions_to_vocabulary(captions)
     saving_ready_captions(captions, "captions.txt")
-    print("Preparing text data was finished!")
+    print("Подготовка текстовых данных завершена!")
