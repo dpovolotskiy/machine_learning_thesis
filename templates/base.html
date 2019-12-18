@@ -1,0 +1,34 @@
+<html>
+    <style>
+        .t {
+            background: #eee;
+            font-size: 0;
+            line-height: 0;
+            text-align: justify;
+            padding: 10px;
+        }
+        .t:after {
+            content: '';
+            width: 100%;
+            display: inline-block;
+        }
+        .i {
+            background: #ddd;
+            font-size: 14px;
+            line-height: normal;
+            display: inline-block;
+            padding: 10px;
+        }
+    </style>
+    <head>
+      <title>Веб-приложение для описания изображений</title>
+    </head>
+    <body>
+    <div class="t">
+        <div class="i"><a href="/">Home</a></div>
+        <div class="i">Сылка на Github с кодом: <a href="https://github.com/dpovolotskiy/machine_learning_thesis">GitHub</a></div>
+    </div>
+    <hr>
+    {% block content %}{% endblock %}
+    </body>
+</html>

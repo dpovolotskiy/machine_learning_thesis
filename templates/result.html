@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<style>
+textarea {
+  resize: none;
+}
+</style>
+{% block title %}Create Post{% endblock %}
+{% block content %}
+<center>
+    <H3>
+        Описываемое изображение:
+    </H3>
+</center>
+<form action="" method=post>
+   {{form.hidden_tag()}}
+   <center>
+   <img src={{form.url_image}} width="481" height="351">
+       <p><label for="Описание изображения">Описание изображения:</label></p>
+       <p><textarea name="Описание изображения" style="overflow:auto;resize:none" rows="15" cols="58">{{form.caption}}</textarea></p>
+   </center>
+</form>
+{% endblock %}

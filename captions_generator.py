@@ -83,3 +83,24 @@ def get_predict(path_to_image, path_to_model=None):
     caption = clean_output_caption(caption)
     print("Описание для указанного изображения {}: {}".format(path_to_image, caption))
     return caption
+
+
+def get_predict_web(path_to_image, path_to_model=None):
+    """
+    функция используется в качестве основной функции генерации текстового
+    описания изображения, выполняет загрузку предобученной модели описания
+    для использования в веб версии интерфейса
+    """
+    print("Prediction was started!")
+    keras_tokenizer = load(open("keras_tokenizer.pkl", "rb"))
+    with open("maximal_length.txt", "r") as max_len_file:
+        maximal_length = int(max_len_file.read())
+    if path_to_model is None:
+        model = load_model("my_model_9.h5")
+    else:
+        model = load_model(path_to_model)
+    image_features = one_image_feature_extracting(path_to_image)
+    caption = generate_caption(model, keras_tokenizer, image_features,
+                               maximal_length)
+    caption = clean_output_caption(caption)
+    return caption
