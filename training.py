@@ -11,7 +11,8 @@ from caption_model import model_for_captions
 
 def loading_of_photo_id(path):
     """
-    функция используется для извлечения id изображений из файла переданного в параметра path
+    функция используется для извлечения id изображений из файла переданного в
+    параметре path
     """
     data = load_file(path)
     ids = []
@@ -25,9 +26,10 @@ def loading_of_photo_id(path):
 
 def loading_cleaned_captions(path, ids):
     """
-    функция используется для загрузки сохраненных, приведенных к единому виду описаний
-    и формирования словаря, в котором каждому id изображения соответствует пять описаний на английском языке,
-    с добавлением начальных и конечных токенов
+    функция используется для загрузки сохраненных, приведенных к единому виду
+    описаний и формирования словаря, в котором каждому id изображения
+    соответствует пять описаний на английском языке, с добавлением начальных
+    и конечных токенов
     """
     data = load_file(path)
     clean_captions = {}
@@ -45,8 +47,8 @@ def loading_cleaned_captions(path, ids):
 
 def captions_to_list(dict_of_captions):
     """
-    функция используется для преобразования словаря, состоящего из id изображений и соответствующих им описаний, в
-    список, без id изображений
+    функция используется для преобразования словаря, состоящего из id
+    изображений и соответствующих им описаний, в список, без id изображений
     """
     list_of_captions = []
     for image_id in dict_of_captions.keys():
@@ -57,7 +59,8 @@ def captions_to_list(dict_of_captions):
 
 def create_keras_tokenizer(captions):
     """
-    функция используется для создания tokenizer, и его обучения на наборе описаний
+    функция используется для создания tokenizer, и его обучения на наборе
+    описаний
     """
     list_of_captions = captions_to_list(captions)
     keras_tokenizer = Tokenizer()
@@ -77,7 +80,8 @@ def calculate_max_caption_len(captions):
 def creating_of_sequences(keras_tokenizer, maximal_length, captions, images,
                           vocabulary_size):
     """
-    функция используется для подготовки данных для подачи на вход при обучении модели стандартным образом
+    функция используется для подготовки данных для подачи на вход при обучении
+    модели стандартным образом
     """
     X1 = []
     X2 = []
@@ -103,7 +107,8 @@ def creating_of_sequences(keras_tokenizer, maximal_length, captions, images,
 def lite_creating_of_sequences(keras_tokenizer, maximal_length, captions,
                                images, vocabulary_size):
     """
-    функция используется для подготовки данных для подачи на вход при обучении модели облегчённым образом
+    функция используется для подготовки данных для подачи на вход при обучении
+    модели облегчённым образом
     """
     X1 = []
     X2 = []
@@ -126,11 +131,13 @@ def lite_creating_of_sequences(keras_tokenizer, maximal_length, captions,
 
 def start_fit_model(epochs=10):
     """
-    функция используется для старта обчения модели описания изображений обычным методом,
-    выполняет подготовку тренировочного и валидационного наборов данных, создает модель описания,
-    и начинает обучения модели, сохраняя лучшую модель в файл "my_model.h5"
+    функция используется для старта обчения модели описания изображений обычным
+    методом, выполняет подготовку тренировочного и валидационного наборов
+    данных, создает модель описания, и начинает обучения модели, сохраняя лучшую
+    модель в файл "my_model.h5"
     """
-    print("Начата загрузка тренировочного набора данных! Это может занять несколько минут...")
+    print("Начата загрузка тренировочного набора данных! "
+          "Это может занять несколько минут...")
     path_to_training_dataset = "Flickr8k_text/Flickr_8k.trainImages.txt"
     train_ids = loading_of_photo_id(path_to_training_dataset)
     train_captions = loading_cleaned_captions("captions.txt", train_ids)
@@ -141,41 +148,58 @@ def start_fit_model(epochs=10):
     maximal_length = calculate_max_caption_len(train_captions)
     with open("maximal_length.txt", "w") as max_len_file:
         max_len_file.write(str(maximal_length))
-    X1train, X2train, ytrain = creating_of_sequences(keras_tokenizer, maximal_length, train_captions, train_image_features, vocabulary_size)
+    X1train, X2train, ytrain = creating_of_sequences(keras_tokenizer,
+                                                     maximal_length,
+                                                     train_captions,
+                                                     train_image_features,
+                                                     vocabulary_size)
     print("Загрузка тренировочного набора данных завершена!")
 
-    print("Начата загрузка набора данных для тестирования! Это может занять несколько минут...")
+    print("Начата загрузка набора данных для тестирования! "
+          "Это может занять несколько минут...")
     path_to_testing_dataset = "Flickr8k_text/Flickr_8k.devImages.txt"
     test_ids = loading_of_photo_id(path_to_testing_dataset)
     test_captions = loading_cleaned_captions("captions.txt", test_ids)
     test_features = load_features_of_image("features.pkl", test_ids)
-    X1test, X2test, ytest = creating_of_sequences(keras_tokenizer, maximal_length, test_captions, test_features, vocabulary_size)
+    X1test, X2test, ytest = creating_of_sequences(keras_tokenizer,
+                                                  maximal_length,
+                                                  test_captions,
+                                                  test_features,
+                                                  vocabulary_size)
     print("Загрузка набора данных для тестирования завершена!")
 
     model = model_for_captions(vocabulary_size, maximal_length)
 
     checkpoint = ModelCheckpoint("my_model.h5", monitor="val_loss", verbose=1,
                                  save_best_only=True, mode="min")
-    model.fit([X1train, X2train], ytrain, epochs=epochs, verbose=2, callbacks=
-              [checkpoint], validation_data=([X1test, X2test], ytest))
+    model.fit([X1train, X2train], ytrain, epochs=epochs, verbose=2,
+              callbacks=[checkpoint], validation_data=([X1test, X2test], ytest))
 
 
-def data_fit_generator(captions, images, keras_tokenizer, maximal_length, vocabulary_size):
+def data_fit_generator(captions, images, keras_tokenizer, maximal_length,
+                       vocabulary_size):
     """
-    функция используется для определения генератора обучающих данных для облегчённого метода обучения
+    функция используется для определения генератора обучающих данных для
+    облегчённого метода обучения
     """
     while True:
         for image_id, captions in captions.items():
             image_feature = images[image_id][0]
-            input_image, input_sequence, output_word = lite_creating_of_sequences(keras_tokenizer, maximal_length, captions, image_feature, vocabulary_size)
+            input_image, input_sequence, output_word = \
+                lite_creating_of_sequences(keras_tokenizer,
+                                           maximal_length,
+                                           captions,
+                                           image_feature,
+                                           vocabulary_size)
             yield [[input_image, input_sequence], output_word]
 
 
 def lite_train(training_captions, training_features, keras_tokenizer,
                maximal_length, vocabulary_size, epochs=10):
     """
-    функция используется для создания модели описания при облегчённом методе обучения,
-    запускает обучение модели, и сохраняет резьльтат после каждой эпохи в фалй "my_model_{номер эпохи}.h5"
+    функция используется для создания модели описания при облегчённом методе
+    обучения, запускает обучение модели, и сохраняет резьльтат после каждой
+    эпохи в фалй "my_model_{номер эпохи}.h5"
     """
     model = model_for_captions(vocabulary_size, maximal_length)
     number_of_steps_per_epoch = len(training_captions)
@@ -191,10 +215,12 @@ def lite_train(training_captions, training_features, keras_tokenizer,
 
 def start_lite_train(epochs):
     """
-    функция используется для подготовки тренировочного набора данных для обучения модели в облегчённом режиме,
-    и вызывает функцию обучения модели облегченным методом
+    функция используется для подготовки тренировочного набора данных для
+    обучения модели в облегчённом режиме, и вызывает функцию обучения модели
+    облегченным методом
     """
-    print("Начата загрузка тренировочного набора данных! Это может занять несколько минут...")
+    print("Начата загрузка тренировочного набора данных! "
+          "Это может занять несколько минут...")
     path_to_training_dataset = "Flickr8k_text/Flickr_8k.trainImages.txt"
     train_ids = loading_of_photo_id(path_to_training_dataset)
     train_captions = loading_cleaned_captions("captions.txt", train_ids)
@@ -206,4 +232,5 @@ def start_lite_train(epochs):
     with open("maximal_length.txt", "w") as max_len_file:
         max_len_file.write(str(maximal_length))
     print("Загрузка тренировочного набора данных завершена!")
-    lite_train(train_captions, train_image_features, keras_tokenizer, maximal_length, vocabulary_size, epochs=epochs)
+    lite_train(train_captions, train_image_features, keras_tokenizer,
+               maximal_length, vocabulary_size, epochs=epochs)

@@ -1,0 +1,1 @@
+https://github.com/keras-team/keras-applications/releases/download/resnet/resnet152_weights_tf_dim_ordering_tf_kernels.h5

@@ -8,7 +8,8 @@ from pickle import load
 
 def load_file(name):
     """
-    функция используется для загрузки данных из файла указанного в параметре name
+    функция используется для загрузки данных из файла указанного в параметре
+    name
     """
     with open(name, "r") as data_file:
         data = data_file.read()
@@ -26,7 +27,8 @@ def check_weights(path):
 
 def prepare_image_to_extracting_features(path_to_image):
     """
-    функция использутется для подготовки изображения к извлечению признаков с помощью VGG16
+    функция использутется для подготовки изображения к извлечению признаков с
+    помощью VGG16
     """
     result_image = load_img(path_to_image, target_size=(224, 224))
     result_image = img_to_array(result_image)
@@ -40,10 +42,10 @@ def prepare_image_to_extracting_features(path_to_image):
 
 def load_features_of_image(path, ids):
     """
-    функция используется для загрузки файла с выделенными, при обучении модели, признаками изображений из файла
+    функция используется для загрузки файла с выделенными, при обучении модели,
+    признаками изображений из файла
     """
     with open(path, "rb") as features_file:
         features = load(features_file)
         features = {image_id: features[image_id] for image_id in ids}
     return features
-
